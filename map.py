@@ -7,8 +7,16 @@ def init_field(width, height):
             line.append(".")
         field.append(line)
     return field
-def print_field(field):
+
+def __print_hero(field,hero_pos):
+    hy, hx  = hero_pos[1],hero_pos[0]
+    field[hy][hx] = "@"
+    field[hy][hx-1] = "."
+    field[hy][hx+1] = "."
+def print_field(field,hero_pos,bullets):
     print(" "*int((len(field[0])/3)) +"Square Invaders")
+
+    __print_hero(field,hero_pos)    
     for line in field:
         print("".join(line))
     print("\n")
