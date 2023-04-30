@@ -7,6 +7,9 @@ from bullet_manager import *
 from checker import *
 import monster_manager as mm
 
+
+system("")
+
 def main():
     bullets.clear() #if restart
     mm.monsters.clear()
@@ -14,12 +17,11 @@ def main():
     field = init_field(FIELD_WIDTH,FIELD_HEIGHT)
     hero = Hero()
 
-    
-    mm.init_monsters((6,0),(50,4))
+    mm.init_monsters((6,0),(40,4))
 
-    
     death = False
     victory = False
+    frags = 0
     
     print('\033[?25l', end="")#hide cursor
     while not death and not victory:
@@ -37,15 +39,19 @@ def main():
         if keyboard.is_pressed("space") and hero.can_shoot():
             bullets.append((chx,chy-1,True))
 
-        check_death((chx,chy),mm.monsters,hero)
-        death = True if hero.health == 0 else False
-
+        frags = check_death((chx,chy),mm.monsters,hero)
+        death = True if hero.health == 0 or mm.do_monsters_win() else False
+        
+        
         if mm.monsters:
             if mm.can_shoot(): mm.shoot(bullets)
             if mm.can_monsters_move(): mm.move_monsters()
         else:
             victory = True
-
+        if frags != 0:
+            hero.score = hero.score + frags*hero.health
+            frags = 0
+        
         print(" "*15,"lives:{}".format(hero.health))
         print(" "*15,"score:{}".format(hero.score))
         move_bullets()

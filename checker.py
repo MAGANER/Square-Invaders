@@ -1,4 +1,4 @@
-FIELD_WIDTH  = 60
+FIELD_WIDTH  = 50
 FIELD_HEIGHT = 20
 
 def can_move(new_x, new_y):

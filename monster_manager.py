@@ -37,7 +37,13 @@ def shoot(bullets):
     global monsters
     pos = choice(monsters)
     bullets.append((pos[0],pos[1],False))
-    
+
+def do_monsters_win():
+    global monsters
+    for m in monsters:
+        if m[1] == 19:
+            return True
+    return False
 __movement_counter = 0
 def __reach_left():
     global monsters

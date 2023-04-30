@@ -1,3 +1,15 @@
+#game field rendering and creating module
+
+class style():
+    #BLACK = '\033[30m'
+    RED = '\033[31m'
+    #GREEN = '\033[32m'
+    YELLOW = '\033[33m'
+    #BLUE = '\033[34m'
+    MAGENTA = '\033[35m'
+    #CYAN = '\033[36m'
+    #WHITE = '\033[37m'
+    END = "\33[0m"
 def init_field(width, height):
     field = []
     for y in range(height):
@@ -9,24 +21,28 @@ def init_field(width, height):
 
 def __print_hero(field,hero_pos):
     hy, hx  = hero_pos[1],hero_pos[0]
-    field[hy][hx] = "@"
+    field[hy][hx] = style.YELLOW+"@"+style.END
     field[hy][hx-1] = "."
     field[hy][hx+1] = "."
-def __print_bullets(field,bullets):
+def __print_elements(field,bullets,monsters):
     for y in range(len(field)):
         line = field[y]
         for x in range(len(field[0])):
-            if (x,y) in bullets:
-                field[y][x] = "*"
+            if (x,y,False) in bullets:
+                field[y][x] = style.MAGENTA+"*"+style.END
+            elif (x,y,True) in bullets:
+                field[y][x] = style.RED +"*"+style.END
+            elif (x,y) in monsters:
+                field[y][x] = "#"
             else:
                 field[y][x] = "."
-
-
-def print_field(field,hero_pos,bullets):
+    
+def print_field(field,hero_pos,bullets,monsters):
     print(" "*int((len(field[0])/3)) +"Square Invaders")
 
-    __print_bullets(field,bullets)
-    __print_hero(field,hero_pos)    
+    __print_elements(field,bullets,monsters)
+    __print_hero(field,hero_pos)
+
     for line in field:
         print("".join(line))
     print("\n")
