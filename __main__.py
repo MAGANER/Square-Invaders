@@ -28,13 +28,13 @@ def main():
         hero.tic()
         mm.tick_mtime()
         mm.tick_stime()
-        if not question: tick_qtime()
+        if not question:
+            tick_qtime()
         
         chx, chy = hero.get_x(), hero.get_y()
         print_field(field,(chx,chy),bullets,mm.monsters)
 
         question = can_ask()
-
         if not question:
             if keyboard.is_pressed("left arrow") and can_move(chx-1,chy):
                 hero.move_left()
@@ -71,6 +71,7 @@ def main():
                         mm.shoot(bullets)
             else:
                 hero.score = hero.score + 50
+            question = False
                     
                 
 
