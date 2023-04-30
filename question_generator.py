@@ -1,6 +1,14 @@
 import random
 from inputimeout import inputimeout, TimeoutOccurred
 
+def flush_input():
+    try:
+        import msvcrt
+        while msvcrt.kbhit():
+            msvcrt.getch()
+    except ImportError:
+        import sys, termios    #for linux/unix
+        termios.tcflush(sys.stdin, termios.TCIOFLUSH)
 
 __time_to_ask = 0
 def tick_qtime():
@@ -19,6 +27,7 @@ def ask():
     b = random.randint(1,100)
     s = a+b
     try:
+        flush_input()
         answer = inputimeout(prompt="please, answer the question: {} + {} = ?".format(a,b),timeout=10)
     except TimeoutOccurred:
         return  False
