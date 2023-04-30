@@ -13,11 +13,16 @@ def main():
     
     field = init_field(FIELD_WIDTH,FIELD_HEIGHT)
     hero = Hero()
-    mm.init_monsters((10,10),(15,15))
-    death = False
 
+    
+    mm.init_monsters((6,0),(50,4))
+
+    
+    death = False
+    victory = False
+    
     print('\033[?25l', end="")#hide cursor
-    while not death:
+    while not death and not victory:
         system("cls||clear")
         hero.tic()
         mm.tick_mtime()
@@ -34,22 +39,31 @@ def main():
 
         check_death((chx,chy),mm.monsters,hero)
         death = True if hero.health == 0 else False
-        
-        if mm.can_shoot(): mm.shoot(bullets)
-        if mm.can_monsters_move(): mm.move_monsters()
+
+        if mm.monsters:
+            if mm.can_shoot(): mm.shoot(bullets)
+            if mm.can_monsters_move(): mm.move_monsters()
+        else:
+            victory = True
 
         print(" "*15,"lives:{}".format(hero.health))
         print(" "*15,"score:{}".format(hero.score))
         move_bullets()
         sleep(0.1)
+        
+    if death:return False
+    if victory: return True
 
 if __name__ == "__main__":
     try:
-        main()
+        result = main()
         system("cls||clear")
         choice = ""
         while True:
-            choice = input("You died. Nation of terminal was conquered by hash-tags... Do you want to restart?(y/n)")
+            if result:
+                choice = input("You win! Nation of terminal is saved from hash-tags' invasion! Do you want to win again?(y/n)")
+            else:
+                choice = input("You died. Nation of terminal was conquered by hash-tags... Do you want to restart?(y/n)")
             if choice not in ["y","n"]: continue
             elif choice == "y": main()
             else: break
