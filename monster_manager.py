@@ -1,4 +1,5 @@
 from checker import *
+from random import choice
 
 monsters = []
 
@@ -8,6 +9,35 @@ def init_monsters(left_top_corner, bottom_right_corner):
             global monsters
             monsters.append((x,y))
 
+__movement_time = 0
+
+def tick_mtime():
+    global __movement_time
+    __movement_time = __movement_time + 1
+
+def can_monsters_move():
+    global __movement_time
+    if __movement_time > 2:
+        __movement_time = 0
+        return True
+    return False
+        
+__shooting_time = 0
+def tick_stime():
+    global __shooting_time
+    __shooting_time = __shooting_time + 1
+def can_shoot():
+    global __shooting_time
+    if __shooting_time > 7:
+        __shooting_time = 0
+        return True
+    return False
+
+def shoot(bullets):
+    global monsters
+    pos = choice(monsters)
+    bullets.append((pos[0],pos[1],False))
+    
 __movement_counter = 0
 def __reach_left():
     global monsters
@@ -55,11 +85,3 @@ def move_monsters():
         __move_monsters(step,0)
     else:
         __movement_counter = __movement_counter + 1
-            
-        
-   
-        
-
-    
-
-

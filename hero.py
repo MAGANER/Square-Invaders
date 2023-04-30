@@ -1,13 +1,15 @@
+
 class Hero(object):
     def __init__(self):
         self.__x = 30
         self.__y = 19
         self.shooting_time_counter = 0
+        self.health = 3
+        self.score = 0
     def get_x(self):
         return self.__x
     def get_y(self):
         return self.__y
-
 
     def tic(self):
         self.shooting_time_counter = self.shooting_time_counter + 1
