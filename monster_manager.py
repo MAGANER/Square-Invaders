@@ -35,8 +35,15 @@ def can_monsters_move():
     return False
 
 
-__time_to_shoot_super = 90
+__time_to_shoot_super = 40
 __super_shooting_time = 0
+
+__super_shooting_range = (40,60)
+def __decrease_range():
+    global __super_shooting_range
+    a = __super_shooting_range[0] - 2
+    b = __super_shooting_range[1] - 2
+    __super_shooting_range = (a,b)
 
 __shooting_time = 0
 def tick_stime():
@@ -55,7 +62,7 @@ def can_shoot_super():
     global __time_to_shoot_super
     if __super_shooting_time >= __time_to_shoot_super:
         __super_shooting_time = 0
-        __time_to_shoot_super = randint(90,140)
+        __time_to_shoot_super = randint(40,90)
         return True
     return False
 
@@ -78,13 +85,11 @@ def do_monsters_win():
 __movement_counter = 0
 def __reach_left():
     global monsters
-    #if monsters[0][0] -1 == -1:
     if __get_leftest_monster_pos() == -1:
         return True
     return False
 def __reach_right():
     global monsters
-    #if monsters[-1][0] + 1 == FIELD_WIDTH:
     if __get_rightest_monster_pos() + 1 == FIELD_WIDTH:
         return True
     return False
@@ -109,6 +114,7 @@ def move_monsters():
 
     if __movement_counter == 2 and not __reach_bottom():
             __move_monsters(0,1)
+            __decrease_range()
             
     if __movement_counter == 2:
         __movement_counter = 0
