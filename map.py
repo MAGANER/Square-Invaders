@@ -24,14 +24,18 @@ def __print_hero(field,hero_pos):
     field[hy][hx] = style.YELLOW+"@"+style.END
     field[hy][hx-1] = "."
     field[hy][hx+1] = "."
+
+def __print_bullets(field,color,curr_bullet_pos):
+    x,y = curr_bullet_pos[0],curr_bullet_pos[1]
+    field[y][x] = color+"*"+style.END
 def __print_elements(field,bullets,monsters):
     for y in range(len(field)):
         line = field[y]
         for x in range(len(field[0])):
             if (x,y,False) in bullets:
-                field[y][x] = style.MAGENTA+"*"+style.END
+                __print_bullets(field,style.MAGENTA,(x,y))
             elif (x,y,True) in bullets:
-                field[y][x] = style.RED +"*"+style.END
+                __print_bullets(field,style.RED,(x,y))
             elif (x,y) in monsters:
                 field[y][x] = "#"
             else:

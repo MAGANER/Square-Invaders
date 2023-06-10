@@ -92,7 +92,7 @@ if __name__ == "__main__":
 
             if choice not in ["y","n"]: continue
             elif choice == "y": main()
-            else: break
+            else: exit(0)
             
     except KeyboardInterrupt:
         system("cls||clear")
