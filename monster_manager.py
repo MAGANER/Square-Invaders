@@ -1,5 +1,5 @@
 from checker import *
-from random import choice
+from random import choice, randint
 
 monsters = []
 
@@ -33,15 +33,29 @@ def can_monsters_move():
         __movement_time = 0
         return True
     return False
-        
+
+
+__time_to_shoot_super = 120
+__super_shooting_time = 0
+
 __shooting_time = 0
 def tick_stime():
     global __shooting_time
+    global __super_shooting_time
     __shooting_time = __shooting_time + 1
+    __super_shooting_time = __super_shooting_time + 1
 def can_shoot():
     global __shooting_time
     if __shooting_time > 7:
         __shooting_time = 0
+        return True
+    return False
+def can_shoot_super():
+    global __super_shooting_time
+    global __time_to_shoot_super
+    if __super_shooting_time >= __time_to_shoot_super:
+        __super_shooting_time = 0
+        __time_to_shoot_super = randint(120,360)
         return True
     return False
 
@@ -49,6 +63,11 @@ def shoot(bullets):
     global monsters
     pos = choice(monsters)
     bullets.append((pos[0],pos[1],False))
+def super_shoot(bullets):
+    global monsters
+    pos = choice(monsters)
+    bullet_poses = [(pos[0],pos[1],False),(pos[0]-1,pos[1],False),(pos[0]+1,pos[1],False)]
+    for bp in bullet_poses: bullets.append(bp)
 
 def do_monsters_win():
     global monsters
