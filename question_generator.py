@@ -17,7 +17,7 @@ def tick_qtime():
     
 def can_ask():
     global __time_to_ask
-    if __time_to_ask > 30:
+    if __time_to_ask > 150:
         __time_to_ask = 0
         return True
     return False
