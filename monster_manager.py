@@ -35,7 +35,7 @@ def can_monsters_move():
     return False
 
 
-__time_to_shoot_super = 120
+__time_to_shoot_super = 90
 __super_shooting_time = 0
 
 __shooting_time = 0
@@ -55,7 +55,7 @@ def can_shoot_super():
     global __time_to_shoot_super
     if __super_shooting_time >= __time_to_shoot_super:
         __super_shooting_time = 0
-        __time_to_shoot_super = randint(120,360)
+        __time_to_shoot_super = randint(90,140)
         return True
     return False
 

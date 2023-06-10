@@ -7,7 +7,7 @@ def flush_input():
         while msvcrt.kbhit():
             msvcrt.getch()
     except ImportError:
-        import sys, termios    #for linux/unix
+        import termios    #for linux/unix
         termios.tcflush(sys.stdin, termios.TCIOFLUSH)
 
 __time_to_ask = 0

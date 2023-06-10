@@ -57,12 +57,13 @@ def main():
             else:
                 victory = True
             if frags != 0:
-                hero.score = hero.score + frags*hero.health
+                hero.score += frags*hero.health
                 frags = 0
                 
             print(" "*15,"lives:{}".format(hero.health))
             print(" "*15,"score:{}".format(hero.score))
-            move_bullets()
+
+            hero.score += move_bullets() # add optional bonus score points if there are some of em
             sleep(0.1)
         
             if death:return False

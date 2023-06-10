@@ -1,31 +1,39 @@
 from checker import *
+from time import sleep
 
 bullets = []
 
-def __collide(pos,bullets):
-    for x,y, _ in bullets:
-        if pos[0] == x and pos[1] == y:
-            return (True,(x,y,False))
+def check_bullet_collision(bull_data,bullets):
+    _x,_y, _bul_type = bull_data
+    for key, val in enumerate(bullets):
+        x,y, bul_type = val
+
+        eq = _x == x and _y == y and bul_type != _bul_type
+        if eq:
+            bul_type = not bullets[key][2]
+            mod = 1 if bul_type else -1
+            del(bullets[key])
+            bullets.remove((x,y+mod,bul_type))
+            return True
     return False
 def move_bullets():
-    counter = 0
+    add_score = 0 #if hero's bullet destroys monster's one
+    
     global bullets
-    for b in bullets:
+    for counter, b in enumerate(bullets):
         mod = -1 if b[2] else 1
         x,y= b[0],b[1]+mod
 
-        coll = __collide((x,y),bullets)
-        result = False
-        if type(coll) == type(False): result = False
-        else: result = True
-
-        if can_move(x,y) and not result:
+        if check_bullet_collision((x,y,b[2]),bullets):
+            add_score += 10
+            continue
+        
+        if can_move(x,y):
             bullets[counter] = (x,y,True) if mod == -1 else (x,y,False)
         else:
             del(bullets[counter])
-            if type(coll) == type(tuple()) and coll[1] in bullets:
-                bullets.remove(coll[1])
-        counter = counter + 1
+
+    return add_score
             
 def check_death(hero_pos, monsters_poses,hero):
     counter = 0
