@@ -9,6 +9,18 @@ def init_monsters(left_top_corner, bottom_right_corner):
             global monsters
             monsters.append((x,y))
 
+
+def __get_sorted_x_poses():
+    global monsters
+    x_poses = [x for x,_ in monsters]
+    x_poses.sort()
+    return x_poses
+
+def __get_leftest_monster_pos():
+    return __get_sorted_x_poses()[0]
+def __get_rightest_monster_pos():
+    return __get_sorted_x_poses()[-1]
+
 __movement_time = 0
 
 def tick_mtime():
@@ -47,12 +59,14 @@ def do_monsters_win():
 __movement_counter = 0
 def __reach_left():
     global monsters
-    if monsters[0][0] -1 == -1:
+    #if monsters[0][0] -1 == -1:
+    if __get_leftest_monster_pos() == -1:
         return True
     return False
 def __reach_right():
     global monsters
-    if monsters[-1][0] + 1 == FIELD_WIDTH:
+    #if monsters[-1][0] + 1 == FIELD_WIDTH:
+    if __get_rightest_monster_pos() + 1 == FIELD_WIDTH:
         return True
     return False
 def __reach_bottom():
