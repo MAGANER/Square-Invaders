@@ -42,6 +42,9 @@ def main():
                 hero.move_right()
             if keyboard.is_pressed("space") and hero.can_shoot():
                 bullets.append((chx,chy-1,True))
+            if keyboard.is_pressed("S") and hero.can_shoot_super():
+                poses = [(chx,chy-1,True),(chx-1,chy-1,True),(chx+1,chy-1,True)]
+                for p in poses: bullets.append(p)
 
             frags = check_death((chx,chy),mm.monsters,hero)
             death = True if hero.health == 0 or mm.do_monsters_win() else False
@@ -49,6 +52,7 @@ def main():
         
             if mm.monsters:
                 if mm.can_shoot(): mm.shoot(bullets)
+                if mm.can_shoot_super(): mm.super_shoot(bullets)
                 if mm.can_monsters_move(): mm.move_monsters()
             else:
                 victory = True
@@ -85,6 +89,7 @@ if __name__ == "__main__":
                 choice = input("You win! Nation of terminal is saved from hash-tags' invasion! Do you want to win again?(y/n)")
             else:
                 choice = input("You died. Nation of terminal was conquered by hash-tags... Do you want to restart?(y/n)")
+
             if choice not in ["y","n"]: continue
             elif choice == "y": main()
             else: break
