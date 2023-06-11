@@ -84,8 +84,6 @@ def main():
             else:
                 hero.score = hero.score + 50
             question = False
-                    
-                
 
 if __name__ == "__main__":
     try:

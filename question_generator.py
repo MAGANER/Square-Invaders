@@ -1,8 +1,10 @@
+#module provides ability to generate question that is one of the game feautures
 import random
 from inputimeout import inputimeout, TimeoutOccurred
 
 def flush_input():
     try:
+        #TODO:this solution doesn't work for windows properly
         import msvcrt
         while msvcrt.kbhit():
             msvcrt.getch()
@@ -16,6 +18,7 @@ def tick_qtime():
     __time_to_ask = __time_to_ask + 1
     
 def can_ask():
+    '''check is it right time to ask question as a+b=?'''
     global __time_to_ask
     if __time_to_ask > 150:
         __time_to_ask = 0
@@ -23,6 +26,7 @@ def can_ask():
     return False
 
 def ask():
+    '''generate question'''
     a = random.randint(1,100)
     b = random.randint(1,100)
     s = a+b
