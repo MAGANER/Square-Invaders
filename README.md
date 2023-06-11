@@ -15,3 +15,6 @@ otherwise you get massive attack.
 Left/Right arrow - to move<br>
 Space - to shoot<br>
 S - to use triple shoot(it requires ```100``` score points)<br>
+
+### Special Thanks
+to https://github.com/eruph for making up all recent ideas.
