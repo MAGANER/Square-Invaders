@@ -1,62 +1,70 @@
-from checker import *
-from random import choice, randint
+#module provides ability to create monsters, make them shoot, move
+####CONTENT OF MODULE#####
+#you can navigate, searching flag placed at the beginning of each block
+#example: #n is flag, where n is number of block
+##########################
+#1 - init block
+#2 - shooting block
+#3 - boundaries checking block
+#4 - movement block
+##########################
 
+
+from random import choice, randint
+from map import FIELD_WIDTH
+
+#1
+################################################
+####init block##################################
 monsters = []
 
 def init_monsters(left_top_corner, bottom_right_corner):
+    '''generate monsters' position to fill subsquare of game field'''
     for y in range(left_top_corner[1],bottom_right_corner[1]):
         for x in range(left_top_corner[0],bottom_right_corner[0]):
             global monsters
             monsters.append((x,y))
-
-
-def __get_sorted_x_poses():
+def do_monsters_win():
+    '''win if there is at least one monster who reaches the ground'''
     global monsters
-    x_poses = [x for x,_ in monsters]
-    x_poses.sort()
-    return x_poses
-
-def __get_leftest_monster_pos():
-    return __get_sorted_x_poses()[0]
-def __get_rightest_monster_pos():
-    return __get_sorted_x_poses()[-1]
-
-__movement_time = 0
-
-def tick_mtime():
-    global __movement_time
-    __movement_time = __movement_time + 1
-
-def can_monsters_move():
-    global __movement_time
-    if __movement_time > 2:
-        __movement_time = 0
-        return True
+    for m in monsters:
+        if m[1] == 19:
+            return True
     return False
+#############################################
 
+#2
+#############################################
+##########shooting block#####################
+__time_to_shoot_super = 40 #(randomly generate in game process) when timer gets equal to this value, use triple shoot
+__super_shooting_time = 0 #triple shooting timer
+__super_shooting_range = (40,60) #time range of triple shooting
+__shooting_time = 0 # regular shooting timer
 
-__time_to_shoot_super = 40
-__super_shooting_time = 0
-
-__super_shooting_range = (40,60)
 def __decrease_range():
-    global __super_shooting_range
-    a = __super_shooting_range[0] - 2
-    b = __super_shooting_range[1] - 2
+    '''everytime monsters move down, decrease range to use triple shooting ability'''
+    global __super_shooting_range    
+    da = __super_shooting_range[0] - 2  
+    a =  da if da > 2 else 2
+
+    db = __super_shooting_range[1] - 2 
+    b =  db if db > 40 else 40
+
     __super_shooting_range = (a,b)
 
-__shooting_time = 0
 def tick_stime():
     global __shooting_time
     global __super_shooting_time
     __shooting_time = __shooting_time + 1
     __super_shooting_time = __super_shooting_time + 1
+    
 def can_shoot():
     global __shooting_time
     if __shooting_time > 7:
         __shooting_time = 0
         return True
     return False
+
 def can_shoot_super():
     global __super_shooting_time
     global __time_to_shoot_super
@@ -67,22 +75,33 @@ def can_shoot_super():
     return False
 
 def shoot(bullets):
+    '''add one bullet from random enemy'''
     global monsters
     pos = choice(monsters)
     bullets.append((pos[0],pos[1],False))
 def super_shoot(bullets):
+    ''' add 3 bullets from random enemy'''
     global monsters
     pos = choice(monsters)
     bullet_poses = [(pos[0],pos[1],False),(pos[0]-1,pos[1],False),(pos[0]+1,pos[1],False)]
     for bp in bullet_poses: bullets.append(bp)
+############################################################
 
-def do_monsters_win():
+#3
+############################################################
+###boundaries checking block################################
+def __get_sorted_x_poses():
+    '''sort all x positions and return them as list'''
     global monsters
-    for m in monsters:
-        if m[1] == 19:
-            return True
-    return False
-__movement_counter = 0
+    x_poses = [x for x,_ in monsters]
+    x_poses.sort()
+    return x_poses
+
+def __get_leftest_monster_pos():
+    return __get_sorted_x_poses()[0]
+def __get_rightest_monster_pos():
+    return __get_sorted_x_poses()[-1]
+
 def __reach_left():
     global monsters
     if __get_leftest_monster_pos() == -1:
@@ -98,13 +117,33 @@ def __reach_bottom():
     if monsters[-1][1] + 1 == 18:
         return True
     return False
+##################################
+
+#4
+##################################
+###movement block#################
+__movement_counter = 0 #increase when reach boundaries, and if it's 2, then move down
+__movement_time = 0
+
+def tick_mtime():
+    global __movement_time
+    __movement_time = __movement_time + 1
+
+def can_monsters_move():
+    global __movement_time
+    if __movement_time > 2:
+        __movement_time = 0
+        return True
+    return False
 
 def __move_monster(n,step_x,step_y):
+    '''update position of single enemy'''
     global monsters
     updated = (monsters[n][0]+step_x,monsters[n][1]+step_y)
     monsters[n] = updated
     
 def __move_monsters(step_x,step_y):
+    ''' move all enemies'''
     for n in range(len(monsters)):
         __move_monster(n,step_x,step_y)
 
@@ -112,21 +151,22 @@ def move_monsters():
     global __movement_counter
     global monsters
 
+    #move monster 1 step down
     if __movement_counter == 2 and not __reach_bottom():
             __move_monsters(0,1)
             __decrease_range()
-            
-    if __movement_counter == 2:
-        __movement_counter = 0
-        
+            __movement_counter = 0
+
+    #choose function associated with current movement direction
     checker = object()
     if __movement_counter == 0:
         checker = __reach_left
     if __movement_counter == 1:
         checker = __reach_right
-        
+    
     if not checker():
         step = -1 if __movement_counter == 0 else 1
         __move_monsters(step,0)
     else:
         __movement_counter = __movement_counter + 1
+#####################################################

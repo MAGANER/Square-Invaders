@@ -8,23 +8,30 @@ from checker import *
 import monster_manager as mm
 from question_generator import *
 
-system("")
 
 def main():
-    bullets.clear() #if restart
+    #####################################
+    ###init game state
+    ##################################
+    #if restart
+    bullets.clear() 
     mm.monsters.clear()
     
-    field = init_field(FIELD_WIDTH,FIELD_HEIGHT)
+    field = init_field()
     hero = Hero()
 
     mm.init_monsters((6,0),(40,4))
 
     death,  victory, question= False, False,False
     frags = 0
-    
+
     print('\033[?25l', end="")#hide cursor
+    ################################
+
     while not death and not victory:
         system("cls||clear")
+
+        #update clocks
         hero.tic()
         mm.tick_mtime()
         mm.tick_stime()
