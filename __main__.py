@@ -65,6 +65,8 @@ def main():
             bm.check_hero_collides_bonuses(hero)
 
             if mm.monsters:
+                mm.check_can_increase_shooting_freq()
+                
                 if mm.can_shoot(): mm.shoot(bullets)
                 if mm.can_shoot_super(): mm.super_shoot(bullets)
                 if mm.can_monsters_move(): mm.move_monsters()

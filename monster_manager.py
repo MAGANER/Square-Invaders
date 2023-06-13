@@ -40,6 +40,20 @@ __time_to_shoot_super = 40 #(randomly generate in game process) when timer gets 
 __super_shooting_time = 0 #triple shooting timer
 __super_shooting_range = (40,60) #time range of triple shooting
 __shooting_time = 0 # regular shooting timer
+__shooting_time_range = 8
+__shooting_time_range_updated = False
+
+def check_can_increase_shooting_freq():
+    global __shooting_time_range
+    global monsters
+    global __shooting_time_range_updated
+
+    if len(monsters)%8 == 0 and __shooting_time_range != 2 and not __shooting_time_range_updated:
+        __shooting_time_range -= 1
+        __shooting_time_range_updated = True
+    
+    if len(monsters)%4 != 0:
+        __shooting_time_range_updated = False
 
 def __decrease_range():
     '''everytime monsters move down, decrease range to use triple shooting ability'''
@@ -60,7 +74,7 @@ def tick_stime():
     
 def can_shoot():
     global __shooting_time
-    if __shooting_time > 7:
+    if __shooting_time > __shooting_time_range:
         __shooting_time = 0
         return True
     return False
