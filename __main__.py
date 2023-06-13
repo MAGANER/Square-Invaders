@@ -7,6 +7,7 @@ from bullet_manager import *
 from checker import *
 import monster_manager as mm
 from question_generator import *
+import bonus_manager as bm
 
 
 def main():
@@ -35,11 +36,13 @@ def main():
         hero.tic()
         mm.tick_mtime()
         mm.tick_stime()
+        bm.tick_bonus_time()
+        bm.tick_movement_time()
         if not question:
             tick_qtime()
         
         chx, chy = hero.get_x(), hero.get_y()
-        print_field(field,(chx,chy),bullets,mm.monsters)
+        print_field(field,(chx,chy),bullets,mm.monsters,bm.bonuses)
 
         question = can_ask()
         if not question:
@@ -56,7 +59,11 @@ def main():
             frags = check_death((chx,chy),mm.monsters,hero)
             death = True if hero.health == 0 or mm.do_monsters_win() else False
         
-        
+
+            bm.check_time_to_generate_bonus()
+            bm.move_bonuses()
+            bm.check_hero_collides_bonuses(hero)
+
             if mm.monsters:
                 if mm.can_shoot(): mm.shoot(bullets)
                 if mm.can_shoot_super(): mm.super_shoot(bullets)
