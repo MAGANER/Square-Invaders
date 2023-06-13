@@ -2,12 +2,12 @@ from random import randint,choice
 import hero
 bonuses = []
 
-# 0 - add health
-# 1 - add score
-
 def add_h(hero): hero.health+=1
 def add_s(hero): hero.score+=10
-types = (add_h, add_s)
+def del_h(hero): 
+    hero.health+=1
+    hero.score+=15
+types = (add_h, add_s,del_h)
 
 __time_to_generate_bonus = 5
 def tick_bonus_time():
@@ -17,7 +17,7 @@ def tick_bonus_time():
 def check_time_to_generate_bonus():
     global __time_to_generate_bonus
     global bonuses
-    if __time_to_generate_bonus > 45 and randint(0,1) == 1:
+    if __time_to_generate_bonus > 170 and randint(0,1) == 1:
         x,y = randint(4,19), randint(0,6)
         bonuses.append((x,y,choice(types)))
         __time_to_generate_bonus = 0
