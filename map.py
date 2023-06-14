@@ -5,7 +5,7 @@ class style():
     '''colors for terminals, supporting escape sequenceses'''
     #BLACK = '\033[30m'
     RED = '\033[31m'
-    #GREEN = '\033[32m'
+    GREEN = '\033[32m'
     YELLOW = '\033[33m'
     #BLUE = '\033[34m'
     MAGENTA = '\033[35m'
@@ -17,34 +17,35 @@ def init_field():
     '''generate matrix'''
     return [["."]*FIELD_WIDTH for _ in range(FIELD_HEIGHT)]
 
-def __print_hero(field,hero_pos):
-    hy, hx  = hero_pos[1],hero_pos[0]
-    field[hy][hx] = style.YELLOW+"@"+style.END
-
-def __print_bullets(field,color,pos):
+def __print_els(field,color,pos, char):
     x,y = pos[0],pos[1]
-    field[y][x] = color+"*"+style.END
+    field[y][x] = color+char+style.END
 
-def __print_elements(field,bullets,monsters):
+
+def __print_elements(field,bullets,monsters,bonuses):
     '''check field line by line and set correct data to show'''
+
+    bonuses_poses = [(x,y) for x,y,_ in bonuses]
     for y in range(FIELD_HEIGHT):
         line = field[y]
         for x in range(FIELD_WIDTH):
-            if (x,y,False) in bullets:#enemy's bullet
-                __print_bullets(field,style.MAGENTA,(x,y))
+            if (x,y) in bonuses_poses:
+                __print_els(field,style.GREEN,(x,y),"?")
+            elif (x,y,False) in bullets:#enemy's bullet
+                __print_els(field,style.MAGENTA,(x,y),"*")
             elif (x,y,True) in bullets:#character's bullet
-                __print_bullets(field,style.RED,(x,y))
+                __print_els(field,style.RED,(x,y),"*")
             elif (x,y) in monsters:#regular monster
                 field[y][x] = "#"
             else:#if it's not tuple, then it's empty space
                 field[y][x] = "."
     
-def print_field(field,hero_pos,bullets,monsters):
+def print_field(field,hero_pos,bullets,monsters,bonuses):
     print(" "*int((len(field[0])/3)) +"Square Invaders")
 
     #set elements and their position
-    __print_elements(field,bullets,monsters)
-    __print_hero(field,hero_pos)
+    __print_elements(field,bullets,monsters,bonuses)
+    __print_els(field,style.YELLOW,hero_pos,"@")
 
     #print field line by line
     for line in field:
