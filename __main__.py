@@ -66,6 +66,7 @@ def main():
 
             if mm.monsters:
                 mm.check_can_increase_shooting_freq()
+                mm.check_can_decrease_time_to_move()
                 
                 if mm.can_shoot(): mm.shoot(bullets)
                 if mm.can_shoot_super(): mm.super_shoot(bullets)

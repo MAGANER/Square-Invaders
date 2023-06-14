@@ -138,14 +138,25 @@ def __reach_bottom():
 ###movement block#################
 __movement_counter = 0 #increase when reach boundaries, and if it's 2, then move down
 __movement_time = 0
+__time_to_move = 2
+__time_to_move_decreased = False
 
+def check_can_decrease_time_to_move():
+    global monsters
+    global __time_to_move
+    global __time_to_move_decreased
+    y_pos = monsters[-1][1]
+    if y_pos % 7 == 0 and not __time_to_move_decreased:
+        __time_to_move -= 1
+        __time_to_move_decreased = True
+        
 def tick_mtime():
     global __movement_time
     __movement_time = __movement_time + 1
 
 def can_monsters_move():
     global __movement_time
-    if __movement_time > 2:
+    if __movement_time > __time_to_move:
         __movement_time = 0
         return True
     return False
@@ -183,4 +194,6 @@ def move_monsters():
         __move_monsters(step,0)
     else:
         __movement_counter = __movement_counter + 1
+
+
 #####################################################
