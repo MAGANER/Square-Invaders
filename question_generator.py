@@ -27,9 +27,16 @@ def can_ask():
 
 def ask():
     '''generate question'''
-    a = random.randint(1,100)
-    b = random.randint(1,100)
-    s = a+b
+    def get_question_data():
+        question_type = True if random.randint(0,5) == 3 else False
+
+        a = random.randint(1,100)
+        b = random.randint(1,100)
+        s = a+b if question_type else str(a)+str(b)
+        a = a if question_type else '"{}"'.format(a)
+        return a,b,s
+
+    a,b,s= get_question_data()
     try:
         flush_input()
         answer = inputimeout(prompt="please, answer the question: {} + {} = ?".format(a,b),timeout=10)
