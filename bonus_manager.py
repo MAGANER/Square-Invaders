@@ -2,12 +2,31 @@ from random import randint,choice
 import hero
 bonuses = []
 
+
+__stop_monsters_for_10_seconds = False
+__stop_time_counter = 0
+def tick_stop_time():
+    global __stop_time_counter
+    __stop_time_counter += 1
+def should_stop_monsters():
+    global __stop_monsters_for_10_seconds
+    return __stop_monsters_for_10_seconds
+def check_should_restart_monsters():
+    global __stop_time_counter
+    global __stop_monsters_for_10_seconds
+    if __stop_time_counter > 60:
+        __stop_monsters_for_10_seconds = False
+
+
 def add_h(hero): hero.health+=1
 def add_s(hero): hero.score+=10
 def del_h(hero): 
     hero.health+=1
     hero.score+=15
-types = (add_h, add_s,del_h)
+def stop_m(hero):
+    global __stop_monsters_for_10_seconds 
+    __stop_monsters_for_10_seconds = True
+types = (add_h, add_s,del_h, stop_m)
 
 __time_to_generate_bonus = 5
 def tick_bonus_time():
