@@ -8,6 +8,7 @@ from checker import *
 import monster_manager as mm
 from question_generator import *
 import bonus_manager as bm
+from timer import *
 
 
 def main():
@@ -20,6 +21,7 @@ def main():
     
     field = init_field()
     hero = Hero()
+    game_timer = timer()
 
     mm.init_monsters((6,0),(40,4))
 
@@ -38,6 +40,7 @@ def main():
         mm.tick_stime()
         bm.tick_bonus_time()
         bm.tick_movement_time()
+        game_timer.tick()
         if not question:
             tick_qtime()
         
@@ -79,6 +82,7 @@ def main():
                 
             print(" "*15,"lives:{}".format(hero.health))
             print(" "*15,"score:{}".format(hero.score))
+            print(" "*15,"time: {}".format(game_timer.get_time()))
 
             hero.score += move_bullets() # add optional bonus score points if there are some of em
             sleep(0.1)
