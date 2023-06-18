@@ -99,6 +99,9 @@ def main():
                 hero.score = hero.score + 50
             question = False
 
+def finish():
+    print("\033[?25h",end="")
+    exit(0)
 if __name__ == "__main__":
     try:
         result = main()
@@ -112,8 +115,8 @@ if __name__ == "__main__":
 
             if choice not in ["y","n"]: continue
             elif choice == "y": main()
-            else: exit(0)
+            else: finish()
             
     except KeyboardInterrupt:
         system("cls||clear")
-        exit(0)
+        finish()
