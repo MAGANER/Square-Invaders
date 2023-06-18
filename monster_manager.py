@@ -189,11 +189,12 @@ def move_monsters():
     if __movement_counter == 1:
         checker = __reach_right
     
-    if not checker():
-        step = -1 if __movement_counter == 0 else 1
-        __move_monsters(step,0)
-    else:
-        __movement_counter = __movement_counter + 1
+    if checker != object():
+        if not checker():
+            step = -1 if __movement_counter == 0 else 1
+            __move_monsters(step,0)
+        else:
+            __movement_counter = __movement_counter + 1
 
 
 #####################################################

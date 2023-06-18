@@ -40,7 +40,11 @@ def main():
         mm.tick_stime()
         bm.tick_bonus_time()
         bm.tick_movement_time()
+<<<<<<< HEAD
         game_timer.tick()
+=======
+        if bm.should_stop_monsters(): bm.tick_stop_time()
+>>>>>>> 68b3a6392cc77edf66f04fad6eef4e4534af4053
         if not question:
             tick_qtime()
         
@@ -67,13 +71,17 @@ def main():
             bm.move_bonuses()
             bm.check_hero_collides_bonuses(hero)
 
+            if bm.should_stop_monsters():
+                bm.check_should_restart_monsters()
+
             if mm.monsters:
                 mm.check_can_increase_shooting_freq()
                 mm.check_can_decrease_time_to_move()
                 
-                if mm.can_shoot(): mm.shoot(bullets)
-                if mm.can_shoot_super(): mm.super_shoot(bullets)
-                if mm.can_monsters_move(): mm.move_monsters()
+                if not bm.should_stop_monsters():
+                    if mm.can_shoot(): mm.shoot(bullets)
+                    if mm.can_shoot_super(): mm.super_shoot(bullets)
+                    if mm.can_monsters_move(): mm.move_monsters()
             else:
                 victory = True
             if frags != 0:
