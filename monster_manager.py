@@ -11,7 +11,7 @@
 
 
 from random import choice, randint
-from map import FIELD_WIDTH
+from map import FIELD_WIDTH,FIELD_HEIGHT
 
 #1
 ################################################
@@ -128,7 +128,7 @@ def __reach_right():
     return False
 def __reach_bottom():
     global monsters
-    if monsters[-1][1] + 1 == 18:
+    if monsters[-1][1] + 1 == FIELD_HEIGHT-2:
         return True
     return False
 ##################################

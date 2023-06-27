@@ -18,9 +18,9 @@ def process_keyboard(hero_position, state):
       chx, chy - character's x and y position
     '''
     chx, chy = hero_position
-    if keyboard.is_pressed("left arrow") and can_move(chx-1,chy):
+    if keyboard.is_pressed("left arrow") and can_move(chx-1,chy,FIELD_HEIGHT):
         state.hero.move_left()
-    if keyboard.is_pressed("right arrow") and can_move(chx+1,chy):
+    if keyboard.is_pressed("right arrow") and can_move(chx+1,chy,FIELD_HEIGHT):
         state.hero.move_right()
     if keyboard.is_pressed("space") and state.hero.can_shoot():
         bullets.append((chx,chy-1,True))
@@ -48,7 +48,8 @@ def process_monsters(state):
         else:
             state.victory = True
 
-def process_misc_state(state):
+def process_misc_state(state,FIELD_HEIGHT=20):
+    chx, chy = state.get_hero_position()
     state.frags = check_death((chx,chy),mm.monsters,state.hero)
     state.death = True if state.hero.health == 0 or mm.do_monsters_win() else False
             
@@ -56,4 +57,4 @@ def process_misc_state(state):
         state.hero.score += state.frags*state.hero.health
         state.frags = 0
                 
-    state.hero.score += move_bullets() # add optional bonus score points if there are some of em
+    state.hero.score += move_bullets(FIELD_HEIGHT) # add optional bonus score points if there are some of em

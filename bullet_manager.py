@@ -16,7 +16,7 @@ def check_bullet_collision(bull_data,bullets):
             bullets.remove((x,y+mod,bul_type))
             return True
     return False
-def move_bullets():
+def move_bullets(FIELD_HEIGHT):
     add_score = 0 #if hero's bullet destroys monster's one
     
     global bullets
@@ -28,7 +28,7 @@ def move_bullets():
             add_score += 10
             continue
         
-        if can_move(x,y):
+        if can_move(x,y,FIELD_HEIGHT):
             bullets[counter] = (x,y,True) if mod == -1 else (x,y,False)
         else:
             del(bullets[counter])
