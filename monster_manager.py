@@ -118,12 +118,12 @@ def __get_rightest_monster_pos():
 
 def __reach_left():
     global monsters
-    if __get_leftest_monster_pos() == -1:
+    if __get_leftest_monster_pos() == 0:
         return True
     return False
 def __reach_right():
     global monsters
-    if __get_rightest_monster_pos() + 1 == FIELD_WIDTH:
+    if __get_rightest_monster_pos() + 1 == FIELD_WIDTH-1:
         return True
     return False
 def __reach_bottom():
