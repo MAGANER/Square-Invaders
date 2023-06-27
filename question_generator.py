@@ -28,7 +28,7 @@ def can_ask():
 def ask():
     '''generate question'''
     def get_question_data():
-        question_type = True if random.randint(0,5) == 3 else False
+        question_type = False if random.randint(0,5) == 3 else True
 
         a = random.randint(1,100)
         b = random.randint(1,100)
