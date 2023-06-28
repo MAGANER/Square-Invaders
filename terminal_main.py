@@ -1,3 +1,4 @@
+
 from time import sleep
 from os import system
 from Game import *
@@ -6,7 +7,7 @@ def main():
     #####################################
     ###init game state
     ##################################
-    state = GameState()
+    state = GameState(19)
     
     
     print('\033[?25l', end="")#hide cursor

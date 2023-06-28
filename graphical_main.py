@@ -1,3 +1,4 @@
+
 from renderer import *
 
 FIELD_HEIGHT = 30#it's evil state mutatation, but it's important!
@@ -9,8 +10,8 @@ def __run_game_session(screen,state):
     if not state.question:
         process_keyboard(state.get_hero_position(),state,30)
         process_bonuses(state)
-        process_monsters(state)
         process_misc_state(state,FIELD_HEIGHT)
+        process_monsters(state)
             
         if state.death:return False
         if state.victory: return True
