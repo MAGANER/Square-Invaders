@@ -13,7 +13,7 @@ def update_clocks(state):
     if not state.question:
         tick_qtime()
 
-def process_keyboard(hero_position, state,FIELD_HEIGHT=19):
+def process_keyboard(hero_position, state,FIELD_HEIGHT=20):
     '''
       chx, chy - character's x and y position
     '''
@@ -50,7 +50,9 @@ def process_monsters(state):
 
 def process_misc_state(state,FIELD_HEIGHT=20):
     chx, chy = state.get_hero_position()
-    state.frags = check_death((chx,chy),mm.monsters,state.hero)
+
+    terminal = True if FIELD_HEIGHT == 20 else False
+    state.frags = check_death((chx,chy),mm.monsters,state.hero, terminal)
     state.death = True if state.hero.health == 0 or mm.do_monsters_win() else False
             
     if state.frags != 0:
