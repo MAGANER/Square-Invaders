@@ -1,8 +1,7 @@
-
 class Hero(object):
-    def __init__(self):
+    def __init__(self,y):
         self.__x = 30
-        self.__y = 19
+        self.__y = y
         self.shooting_time_counter = 0
         self.health = 3
         self.score = 0
