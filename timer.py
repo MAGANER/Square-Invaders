@@ -22,3 +22,5 @@ class timer:
             self.__hours+= 1
     def get_time(self):
         return "{}:{}:{}".format(self.__seconds,self.__minutes,self.__hours)
+    def get_seconds(self):
+        return self.__seconds
