@@ -13,7 +13,7 @@ def update_clocks(state):
     if not state.question:
         tick_qtime()
 
-def process_keyboard(hero_position, state):
+def process_keyboard(hero_position, state,FIELD_HEIGHT=19):
     '''
       chx, chy - character's x and y position
     '''
