@@ -8,7 +8,7 @@ def __run_game_session(screen,state):
     state.question = can_ask()
     if not state.question:
         process_keyboard(state.get_hero_position(),state,30)
-        process_bonuses(state)
+        process_bonuses(state,FIELD_HEIGHT)
         process_misc_state(state,FIELD_HEIGHT)
         process_monsters(state)
             
@@ -65,13 +65,13 @@ def run_game():
                 draw_question = True
                 a,b,s = ask(True)
                 renderer.question_values = (a,b,s)
-                
         elif question_box.ready or (question_box_timer.get_seconds() > 10 and state.question):
             __run_question_session(screen,question_box,renderer,state,question_box_timer)
             state.question = False
             draw_question = False
             question_box_timer = timer()
             question_box.clear()
+            print(state.death)
 
 
         screen.fill("black")
@@ -85,4 +85,3 @@ def run_game():
         clock.tick(5)
         
     pygame.quit()
-        

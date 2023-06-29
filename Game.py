@@ -28,9 +28,9 @@ def process_keyboard(hero_position, state,FIELD_HEIGHT=20):
         poses = [(chx,chy-1,True),(chx-1,chy-1,True),(chx+1,chy-1,True)]
         for p in poses: bullets.append(p)
 
-def process_bonuses(state):
+def process_bonuses(state,FIELD_HEIGHT):
     bm.check_time_to_generate_bonus()
-    bm.move_bonuses()
+    bm.move_bonuses(FIELD_HEIGHT)
     bm.check_hero_collides_bonuses(state.hero)
 
     if bm.should_stop_monsters():

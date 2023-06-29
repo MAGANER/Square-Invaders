@@ -27,7 +27,7 @@ def main():
         state.question = can_ask()
         if not state.question:
             process_keyboard(state.get_hero_position(),state)
-            process_bonuses(state)
+            process_bonuses(state,FIELD_HEIGHT)
             process_monsters(state)
             process_misc_state(state)
             

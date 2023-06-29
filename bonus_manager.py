@@ -1,4 +1,5 @@
 from random import randint,choice
+from checker import *
 import hero
 bonuses = []
 
@@ -46,12 +47,12 @@ def tick_movement_time():
     global __movement_time_counter
     __movement_time_counter+= 1
 
-def move_bonuses():
+def move_bonuses(FIELD_HEIGHT):
     global __movement_time_counter
     if __movement_time_counter > 3:
         __movement_time_counter = 0
         for i,val in enumerate(bonuses):
-            if val[1]+1 < 50:
+            if can_move(val[0],val[1],FIELD_HEIGHT):
                 bonuses[i] = (val[0],val[1]+1,val[2])
             else:
                 del(bonuses[i])
