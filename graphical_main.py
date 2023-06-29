@@ -47,7 +47,6 @@ def run_game():
     question_box = InputBox(450,300,140,32,font)
     running = True
     draw_question = False
-
     while running:
         update_clocks(state)
         if draw_question: question_box_timer.tick()
@@ -73,15 +72,21 @@ def run_game():
             question_box.clear()
             print(state.death)
 
-
+        if keyboard.is_pressed("y"):
+            return True
+            
         screen.fill("black")
         if game_session: renderer.draw_game_session(screen,state,font)
         if draw_question:
             renderer.draw_question(screen,font)
             question_box.draw(screen)
+        if state.death:
+            renderer.draw_death_screen(screen,font)
+            
         pygame.display.flip()
 
         
         clock.tick(5)
         
     pygame.quit()
+    return False

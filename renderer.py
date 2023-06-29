@@ -1,8 +1,8 @@
 import pygame
 from Game import *
 
-def prepare_text(font,text):
-        return font.render(text, False, (255, 255, 0))
+def prepare_text(font,text,color=(255,255,0)):
+        return font.render(text, False, color)
     
 class InputBox:
     def __init__(self, x, y, w, h,font,text=""):
@@ -56,8 +56,9 @@ class Renderer:
             
     def __draw_bullets(self,screen):
         for x,y,t in bullets:
-            color = "red" if t else "magenta"         
-            pygame.draw.circle(screen,color,pygame.Vector2(self.pp(x),self.pp(y)),radius=3)
+            color = "red" if t else "magenta"
+            y_pos = self.pp(y)+10 if not t else self.pp(y)
+            pygame.draw.circle(screen,color,pygame.Vector2(self.pp(x),y_pos),radius=3)
         
     def __draw_character(self,screen,state):
         x,y = state.get_hero_position()
@@ -69,12 +70,19 @@ class Renderer:
             key = random.choice(list(pygame.color.THECOLORS.keys()))
             pygame.draw.circle(screen,key,pygame.Vector2(self.pp(x),self.pp(y)),radius=4)
             
-    def __draw_borders(self,screen,rects):
+    def __draw_borders(self,screen,rects,color="green"):
         for r in rects:
-            pygame.draw.rect(screen,"green",r)
+            pygame.draw.rect(screen,color,r)
    
     def __draw_text(self,screen,text,pos):
         screen.blit(text, pos)
+        
+    def draw_death_screen(self,screen,font):
+        self.__draw_text(screen,prepare_text(font,"YOU DIED?"),(360,240))
+        self.__draw_text(screen,prepare_text(font,"press"),(180,260))
+        self.__draw_text(screen,prepare_text(font, "Y",(255,0,0)),(235,260))
+        self.__draw_text(screen,prepare_text(font," to see the answer and be careful with the stone,Sysyphus."),(245,260))
+        self.__draw_borders(screen,self.main_rects)
         
     def draw_game_session(self,screen,state,font):
             self.__draw_monsters(screen)
