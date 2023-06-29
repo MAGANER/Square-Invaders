@@ -43,6 +43,9 @@ class Renderer:
         return offset+(val*16)
     
     def __draw_monsters(self,screen):
+        if len(mm.monsters) == 0:
+                return
+
         dx = 1
         _,prevy = mm.monsters[0]
         for x,y  in mm.monsters:
@@ -58,12 +61,13 @@ class Renderer:
         for x,y,t in bullets:
             color = "red" if t else "magenta"
             y_pos = self.pp(y)+10 if not t else self.pp(y)
-            pygame.draw.circle(screen,color,pygame.Vector2(self.pp(x),y_pos),radius=3)
+            x_pos = self.pp(x)+5 if not t else self.pp(x)+5
+            pygame.draw.circle(screen,color,pygame.Vector2(x_pos,y_pos),radius=3)
         
     def __draw_character(self,screen,state):
         x,y = state.get_hero_position()
         #pygame.draw.rect(screen,"white",(self.pp(x,20),self.pp(y,20),8,8))
-        screen.blit(self.char,(self.pp(x,20)-10,self.pp(y,20)))
+        screen.blit(self.char,(self.pp(x,20)-5,self.pp(y,20)))
         
     def __draw_bonuses(self,screen):
         for x,y,_ in bm.bonuses:
@@ -77,13 +81,16 @@ class Renderer:
     def __draw_text(self,screen,text,pos):
         screen.blit(text, pos)
         
-    def draw_death_screen(self,screen,font):
-        self.__draw_text(screen,prepare_text(font,"YOU DIED?"),(360,240))
+    def __draw_finish_screen(self,screen,font,label, second_label):
+        self.__draw_text(screen,prepare_text(font,label),(360,240))
         self.__draw_text(screen,prepare_text(font,"press"),(180,260))
         self.__draw_text(screen,prepare_text(font, "Y",(255,0,0)),(235,260))
-        self.__draw_text(screen,prepare_text(font," to see the answer and be careful with the stone,Sysyphus."),(245,260))
+        self.__draw_text(screen,prepare_text(font,second_label),(245,260))
         self.__draw_borders(screen,self.main_rects)
-        
+    def draw_death_screen(self,screen,font):
+            self.__draw_finish_screen(screen,font,"YOU DIED?"," to see the answer and be careful with the stone,Sysyphus.")
+    def draw_victory_screen(self,screen,font):
+            self.__draw_finish_screen(screen,font,"YOU WIN."," to see what's next and be careful with the stone,Sysyphus.")
     def draw_game_session(self,screen,state,font):
             self.__draw_monsters(screen)
             self.__draw_bullets(screen)
@@ -96,7 +103,7 @@ class Renderer:
             self.__draw_borders(screen,self.main_rects)
 
     def draw_question(self,screen,font):
-        pygame.draw.rect(screen,"black",(240,200,500,200))
+        pygame.draw.rect(screen,"black",(230,200,500,200))
         self.__draw_borders(screen,self.question_rects)
         a,b,_ = self.question_values
         self.__draw_text(screen,prepare_text(font,"please, answer the question: {} + {} = ?".format(a,b)),(260,240))

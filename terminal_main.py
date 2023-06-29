@@ -28,7 +28,7 @@ def main():
         if not state.question:
             process_keyboard(state.get_hero_position(),state)
             process_bonuses(state,FIELD_HEIGHT)
-            process_monsters(state)
+            process_monsters(state,FIELD_HEIGHT)
             process_misc_state(state)
             
             if state.death:return False

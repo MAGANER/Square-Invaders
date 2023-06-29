@@ -33,7 +33,9 @@ __time_to_generate_bonus = 5
 def tick_bonus_time():
     global __time_to_generate_bonus
     __time_to_generate_bonus+= 1
-
+def restart_bonus_time():
+    global __time_to_generate_bonus
+    __time_to_generate_bonus = 5
 def check_time_to_generate_bonus():
     global __time_to_generate_bonus
     global bonuses

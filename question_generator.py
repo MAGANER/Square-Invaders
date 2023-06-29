@@ -16,7 +16,10 @@ __time_to_ask = 0
 def tick_qtime():
     global __time_to_ask
     __time_to_ask = __time_to_ask + 1
-    
+
+def restart_asking_time():
+    global __time_to_ask
+    __time_to_ask = 0
 def can_ask():
     '''check is it right time to ask question as a+b=?'''
     global __time_to_ask
@@ -25,7 +28,7 @@ def can_ask():
         return True
     return False
 
-def ask():
+def ask(graphical = False):
     '''generate question'''
     def get_question_data():
         question_type = False if random.randint(0,5) == 3 else True
@@ -37,6 +40,11 @@ def ask():
         return a,b,s
 
     a,b,s= get_question_data()
+
+    #get question for graphical version
+    if graphical:
+        return get_question_data()
+    
     try:
         flush_input()
         answer = inputimeout(prompt="please, answer the question: {} + {} = ?".format(a,b),timeout=10)

@@ -10,7 +10,7 @@ def __run_game_session(screen,state):
         process_keyboard(state.get_hero_position(),state,30)
         process_bonuses(state,FIELD_HEIGHT)
         process_misc_state(state,FIELD_HEIGHT)
-        process_monsters(state)
+        process_monsters(state,FIELD_HEIGHT)
             
         if state.death:return False
         if state.victory: return True
@@ -37,6 +37,8 @@ def run_game():
     screen = pygame.display.set_mode((860,600))
     pygame.display.set_caption("Square Invaders")
     font = pygame.font.SysFont('Consolas', 16)
+    restart_asking_time()
+    bm.restart_bonus_time()
 
     question_box_timer = timer()
     
@@ -70,18 +72,19 @@ def run_game():
             draw_question = False
             question_box_timer = timer()
             question_box.clear()
-            print(state.death)
 
-        if keyboard.is_pressed("y"):
+        if keyboard.is_pressed("y") and not game_session:
             return True
             
         screen.fill("black")
         if game_session: renderer.draw_game_session(screen,state,font)
-        if draw_question:
+        if draw_question and game_session:
             renderer.draw_question(screen,font)
             question_box.draw(screen)
         if state.death:
             renderer.draw_death_screen(screen,font)
+        if state.victory:
+            renderer.draw_victory_screen(screen,font)
             
         pygame.display.flip()
 

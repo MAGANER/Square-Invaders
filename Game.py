@@ -36,7 +36,7 @@ def process_bonuses(state,FIELD_HEIGHT):
     if bm.should_stop_monsters():
         bm.check_should_restart_monsters()
 
-def process_monsters(state):
+def process_monsters(state,FIELD_HEIGHT):
     if mm.monsters:
         mm.check_can_increase_shooting_freq()
         mm.check_can_decrease_time_to_move()
@@ -44,16 +44,16 @@ def process_monsters(state):
         if not bm.should_stop_monsters():
             if mm.can_shoot(): mm.shoot(bullets)
             if mm.can_shoot_super(): mm.super_shoot(bullets)
-            if mm.can_monsters_move(): mm.move_monsters()
-        else:
-            state.victory = True
+            if mm.can_monsters_move(): mm.move_monsters(FIELD_HEIGHT)
+    else:
+        state.victory = True
 
 def process_misc_state(state,FIELD_HEIGHT=20):
     chx, chy = state.get_hero_position()
 
     terminal = True if FIELD_HEIGHT == 20 else False
     state.frags = check_death((chx,chy),mm.monsters,state.hero, terminal)
-    state.death = True if state.hero.health == 0 or mm.do_monsters_win() else False
+    state.death = True if state.hero.health == 0 or mm.do_monsters_win(FIELD_HEIGHT) else False
             
     if state.frags != 0:
         state.hero.score += state.frags*state.hero.health

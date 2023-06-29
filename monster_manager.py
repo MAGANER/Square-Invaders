@@ -24,11 +24,11 @@ def init_monsters(left_top_corner, bottom_right_corner):
         for x in range(left_top_corner[0],bottom_right_corner[0]):
             global monsters
             monsters.append((x,y))
-def do_monsters_win():
+def do_monsters_win(FIELD_HEIGHT):
     '''win if there is at least one monster who reaches the ground'''
     global monsters
     for m in monsters:
-        if m[1] == 19:
+        if m[1]+1 == FIELD_HEIGHT-2:
             return True
     return False
 #############################################
@@ -126,7 +126,7 @@ def __reach_right():
     if __get_rightest_monster_pos() + 1 == FIELD_WIDTH-1:
         return True
     return False
-def __reach_bottom():
+def __reach_bottom(FIELD_HEIGHT):
     global monsters
     if monsters[-1][1] + 1 == FIELD_HEIGHT-2:
         return True
@@ -172,12 +172,12 @@ def __move_monsters(step_x,step_y):
     for n in range(len(monsters)):
         __move_monster(n,step_x,step_y)
 
-def move_monsters():
+def move_monsters(FIELD_HEIGHT):
     global __movement_counter
     global monsters
 
     #move monster 1 step down
-    if __movement_counter == 2 and not __reach_bottom():
+    if __movement_counter == 2 and not __reach_bottom(FIELD_HEIGHT):
             __move_monsters(0,1)
             __decrease_range()
             __movement_counter = 0
@@ -186,15 +186,18 @@ def move_monsters():
     checker = object()
     if __movement_counter == 0:
         checker = __reach_left
-    if __movement_counter == 1:
+    elif __movement_counter == 1:
         checker = __reach_right
-    
-    if checker != object():
+        
+    if __movement_counter == 0 or __movement_counter == 1:
         if not checker():
             step = -1 if __movement_counter == 0 else 1
             __move_monsters(step,0)
         else:
             __movement_counter = __movement_counter + 1
-
+    else:
+        print("fuck, i'm here")
+        __movement_counter = 2
+        
 
 #####################################################
