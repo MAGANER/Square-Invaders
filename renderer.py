@@ -31,13 +31,30 @@ class InputBox:
 class Renderer:
     def __init__(self):
         self.FIELD_HEIGHT = 30
-        self.invader = pygame.image.load('SquareInvaders/assets/invader.png').convert_alpha()
-        self.char = pygame.image.load("SquareInvaders/assets/char.png").convert_alpha()
+        self.invader = self.__load_image('invader.png')
+        self.char = self.__load_image("char.png")
         self.main_rects = [(10,5,835,5),(10,585,840,5),(10,5,5,580),(845,5,5,580)]
         self.question_rects = [(220,190,500,10),(220,400,500,10),(220,190,10,210),(720,190,10,220)]
 
         self.question_values = None
 
+    def __load_image(self,name):
+            path1 = "SquareInvaders/assets/"+name
+            path2 = "assets/"+name
+            
+            image = None
+            load = lambda p:pygame.image.load(p).convert_alpha()
+            try:
+                image = load(path1)
+            except FileNotFoundError:
+                try:
+                    image = load(path2)
+                except FileNotFoundError:
+                    print("can not load {} and {}.".format(path1,path2))
+                    exit(-1)
+            return image
+
+                             
     def pp(self,val,offset=22):
         '''prepare position'''
         return offset+(val*16)
