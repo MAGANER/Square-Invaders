@@ -12,6 +12,11 @@ otherwise you get massive attack.
 to run terminal version type ```python SquareInvaders classic```
 
 ### Start of game
+
+### Graphical version
+<a href="https://ibb.co/rfbWwGs"><img src="https://i.ibb.co/7Ng91J4/invaders.jpg" alt="invaders" border="0"></a><br /><a target='_blank' href='https://imgbb.com/'>photo element ru</a><br />
+
+### Terminal version
 <a href="https://imgbb.com/"><img src="https://i.ibb.co/wN9s0LK/SQ1.png" alt="start of game" border="0"></a>
 
 # Keys
