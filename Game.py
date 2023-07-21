@@ -24,6 +24,7 @@ def process_keyboard(hero_position, state,FIELD_HEIGHT=20):
         state.hero.move_right()
     if keyboard.is_pressed("space") and state.hero.can_shoot():
         bullets.append((chx,chy-1,True))
+        state.hero.sound_shoot()
     if keyboard.is_pressed("S") and state.hero.can_shoot_super():
         poses = [(chx,chy-1,True),(chx-1,chy-1,True),(chx+1,chy-1,True)]
         for p in poses: bullets.append(p)

@@ -12,6 +12,7 @@
 
 from random import choice, randint
 from map import FIELD_WIDTH,FIELD_HEIGHT
+import pygame
 
 #1
 ################################################
@@ -91,8 +92,10 @@ def can_shoot_super():
 def shoot(bullets):
     '''add one bullet from random enemy'''
     global monsters
+    global __regular_shoot_sound
     pos = choice(monsters)
     bullets.append((pos[0],pos[1],False))
+    
 def super_shoot(bullets):
     ''' add 3 bullets from random enemy'''
     global monsters
@@ -196,7 +199,6 @@ def move_monsters(FIELD_HEIGHT):
         else:
             __movement_counter = __movement_counter + 1
     else:
-        print("fuck, i'm here")
         __movement_counter = 2
         
 

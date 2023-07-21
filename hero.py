@@ -1,3 +1,5 @@
+import pygame
+
 class Hero(object):
     def __init__(self,y):
         self.__x = 30
@@ -5,11 +7,17 @@ class Hero(object):
         self.shooting_time_counter = 0
         self.health = 3
         self.score = 0
+        self.shoot_sound = None
     def get_x(self):
         return self.__x
     def get_y(self):
         return self.__y
 
+    def init_sound(self):
+        self.shoot_sound = pygame.mixer.Sound("assets/char_shoot.wav")
+    def sound_shoot(self):
+        if not self.shoot_sound is None:
+            self.shoot_sound.play()
     def tic(self):
         self.shooting_time_counter = self.shooting_time_counter + 1
     def can_shoot(self):

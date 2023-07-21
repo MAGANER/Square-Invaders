@@ -40,11 +40,16 @@ def run_game():
     restart_asking_time()
     bm.restart_bonus_time()
 
+    icon = pygame.image.load("assets/icon.ico")
+    pygame.display.set_icon(icon)
+
     question_box_timer = timer()
     
     clock = pygame.time.Clock()
     state = GameState(29)
     renderer = Renderer()
+
+    state.hero.init_sound()
 
     question_box = InputBox(450,300,140,32,font)
     running = True
