@@ -12,7 +12,10 @@
 
 from random import choice, randint
 from map import FIELD_WIDTH,FIELD_HEIGHT
-import pygame
+import sys
+
+if len(sys.argv) > 1 and sys.argv[1] != "classic":
+    import pygame
 
 #1
 ################################################

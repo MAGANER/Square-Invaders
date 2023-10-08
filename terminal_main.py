@@ -1,6 +1,6 @@
-
 from time import sleep
 from os import system
+import os
 from Game import *
 
 def main():
@@ -14,7 +14,10 @@ def main():
     ################################
 
     while not state.death and not state.victory:
-        system("cls||clear")
+        if os.name == "nt":
+            system("cls")
+        else:
+            system("clear")
         update_clocks(state)
 
         

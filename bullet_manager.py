@@ -1,6 +1,10 @@
 from checker import *
 from time import sleep
-import pygame
+import sys
+
+if len(sys.argv) > 1 and sys.argv[1] != "classic":
+    import pygame
+
 bullets = []
 
 def check_bullet_collision(bull_data,bullets):

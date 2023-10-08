@@ -1,6 +1,7 @@
 #module provides ability to generate question that is one of the game feautures
 import random
 from inputimeout import inputimeout, TimeoutOccurred
+import sys
 
 def flush_input():
     try:

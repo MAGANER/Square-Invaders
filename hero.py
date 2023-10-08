@@ -1,4 +1,9 @@
-import pygame
+import sys
+
+not_classic = False
+if len(sys.argv) > 1 and  sys.argv[1] != "classic":
+    not_classic = True
+    import pygame
 
 class Hero(object):
     def __init__(self,y):
@@ -14,9 +19,10 @@ class Hero(object):
         return self.__y
 
     def init_sound(self):
-        self.shoot_sound = pygame.mixer.Sound("assets/char_shoot.wav")
+        if not not_classic:
+            self.shoot_sound = pygame.mixer.Sound("assets/char_shoot.wav")
     def sound_shoot(self):
-        if not self.shoot_sound is None:
+        if not not_classic and not self.shoot_sound is None:
             self.shoot_sound.play()
     def tic(self):
         self.shooting_time_counter = self.shooting_time_counter + 1
