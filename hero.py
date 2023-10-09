@@ -1,9 +1,10 @@
 import sys
 
 not_classic = False
-if len(sys.argv) > 1 and  sys.argv[1] != "classic":
+if len(sys.argv) == 1:
     not_classic = True
     import pygame
+    
 
 class Hero(object):
     def __init__(self,y):

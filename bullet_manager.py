@@ -2,7 +2,7 @@ from checker import *
 from time import sleep
 import sys
 
-if len(sys.argv) > 1 and sys.argv[1] != "classic":
+if len(sys.argv) == 1:
     import pygame
 
 bullets = []
