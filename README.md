@@ -5,9 +5,8 @@ So if you know the original Space Invaders, you understand the core conception.<
 But there is moment, when game asks to solve simple math task and if answer is correct you get score,<br>
 otherwise you get massive attack.
 
-``` pip install keyboard``` - required library 1
-``` pip install inputimeout``` - required library 2
-``` pip install pygame ``` - optional requirement 3 to play graphical version
+``` pip install keyboard``` - required library 1<br>
+``` pip install pygame ``` - optional requirement 3 to play graphical version<br>
 
 to run terminal version type ```python SquareInvaders classic```
 
