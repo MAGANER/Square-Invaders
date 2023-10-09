@@ -1,5 +1,26 @@
 import curses
 import GameState
+import time
+import signal
+
+class TimeoutException(Exception):   # Custom exception class
+    pass
+
+def break_after(seconds=2):
+    def timeout_handler(signum, frame):   # Custom signal handler
+        raise TimeoutException
+    def function(function):
+        def wrapper(*args, **kwargs):
+            signal.signal(signal.SIGALRM, timeout_handler)
+            signal.alarm(seconds)
+            try:
+                res = function(*args, **kwargs)
+                signal.alarm(0)      # Clear alarm
+                return res
+            except TimeoutException:
+                return False
+        return wrapper
+    return function
 
 #game field rendering and creating module
 FIELD_WIDTH, FIELD_HEIGHT = 50, 20
@@ -66,6 +87,8 @@ def print_state(state):
     stdscr.addstr(21,20,"score:"+str(state.hero.score))
     stdscr.addstr(22,18,"time - "+ str(state.game_timer.get_time()))
 
+
+@break_after(8)
 def print_question(a,b,c):
     stdscr.addstr(23,18,"please, answer the question {} + {} = ?".format(a,b))
     curses.echo()
