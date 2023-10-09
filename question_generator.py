@@ -17,7 +17,7 @@ def restart_asking_time():
 def can_ask():
     '''check is it right time to ask question as a+b=?'''
     global __time_to_ask
-    if __time_to_ask > 40: #150:
+    if __time_to_ask > 150:
         __time_to_ask = 0
         return True
     return False
