@@ -1,6 +1,5 @@
 import curses
 import GameState
-from quit_after import *
 
 #game field rendering and creating module
 FIELD_WIDTH, FIELD_HEIGHT = 50, 20
@@ -86,7 +85,6 @@ def print_state(state):
     stdscr.addstr(21,20,"score:"+str(state.hero.score))
     stdscr.addstr(22,18,"time - "+ str(state.game_timer.get_time()))
 
-@exit_after(5)
 def print_question(a,b,c):
     stdscr.addstr(23,18,"please, answer the question {} + {} = ?".format(a,b))
     curses.echo()
