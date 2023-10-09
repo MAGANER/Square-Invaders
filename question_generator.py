@@ -1,6 +1,5 @@
 #module provides ability to generate question that is one of the game feautures
 import random
-from inputimeout import inputimeout, TimeoutOccurred
 import sys
 
 if len(sys.argv) > 1 and sys.argv[1] == "classic":
@@ -22,7 +21,7 @@ def can_ask():
         return True
     return False
 
-def ask(graphical = False):
+def ask():
     '''generate question'''
     def get_question_data():
         question_type = False if random.randint(0,5) == 3 else True
@@ -35,8 +34,5 @@ def ask(graphical = False):
 
     a,b,s= get_question_data()
 
-    #get question for graphical version
-    if graphical:
-        return get_question_data()
+    return get_question_data()
 
-    return a,b,s

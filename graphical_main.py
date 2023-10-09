@@ -69,7 +69,7 @@ def run_game():
             if __run_game_session(screen,state):
                 state.question = True
                 draw_question = True
-                a,b,s = ask(True)
+                a,b,s = ask()
                 renderer.question_values = (a,b,s)
         elif question_box.ready or (question_box_timer.get_seconds() > 10 and state.question):
             __run_question_session(screen,question_box,renderer,state,question_box_timer)
