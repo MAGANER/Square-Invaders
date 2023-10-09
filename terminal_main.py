@@ -14,7 +14,6 @@ def main():
     ################################
 
     while not state.death and not state.victory:
-        refresh()
         update_clocks(state)
 
         
@@ -34,7 +33,6 @@ def main():
 
             sleep(0.1)        
         else:
-            #curses.echo()
             #result = ask()
             #if not print_question(*result):
             #    if len(mm.monsters) > 10:
@@ -45,6 +43,7 @@ def main():
             state.question = False
 
         update()
+        refresh()
 
     
 

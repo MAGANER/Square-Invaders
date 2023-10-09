@@ -4,19 +4,6 @@ import GameState
 #game field rendering and creating module
 FIELD_WIDTH, FIELD_HEIGHT = 50, 20
 
-class style():
-    '''colors for terminals, supporting escape sequenceses'''
-    #BLACK = '\033[30m'
-    RED = '\033[31m'
-    GREEN = '\033[32m'
-    YELLOW = '\033[33m'
-    #BLUE = '\033[34m'
-    MAGENTA = '\033[35m'
-    #CYAN = '\033[36m'
-    #WHITE = '\033[37m'
-    END = "\33[0m"
-
-
 stdscr = None
 def init():
     global stdscr
@@ -25,6 +12,12 @@ def init():
     curses.cbreak()
     curses.curs_set(0)
     stdscr.keypad(True)
+    curses.start_color()
+    curses.use_default_colors()
+    curses.init_pair(1,curses.COLOR_MAGENTA,curses.COLOR_BLACK)
+    curses.init_pair(2,curses.COLOR_RED,curses.COLOR_BLACK)
+    curses.init_pair(3,curses.COLOR_YELLOW,curses.COLOR_BLACK)
+    curses.init_pair(4,curses.COLOR_GREEN,curses.COLOR_BLACK)
 
 def quit():
     curses.nocbreak()
@@ -50,27 +43,15 @@ def __print_elements(field,bullets,monsters,bonuses):
         line = field[y]
         for x in range(FIELD_WIDTH):
             if (x,y) in bonuses_poses:
-                stdscr.addstr(y,x,"?")
+                stdscr.addstr(y,x,"?",curses.color_pair(4))
             elif (x,y,False) in bullets:#enemy's bullet
-                stdscr.addstr(y,x,"*")
+                stdscr.addstr(y,x,"*",curses.color_pair(2))
             elif (x,y,True) in bullets:#character's bullet
-                stdscr.addstr(y,x,"*")
+                stdscr.addstr(y,x,"^",curses.color_pair(1))
             elif (x,y) in monsters:#regular monster
                 stdscr.addstr(y,x,"#")
             else:#if it's not tuple, then it's empty space
                 stdscr.addstr(y,x,".")
-    
-def print_field(field,hero_pos,bullets,monsters,bonuses):
-    print(" "*int((len(field[0])/3)) +"Square Invaders")
-
-    #set elements and their position
-    __print_elements(field,bullets,monsters,bonuses)
-    stdscr.addstr(hero_pos[1],hero_pos[0],"@")
-
-    #print field line by line
-    for line in field:
-        print("".join(line))
-    print("\n")
 
 def cprint_field(field,hero_pos,bullets,monsters,bonuses):
     for y in range(0,FIELD_HEIGHT):
@@ -78,7 +59,7 @@ def cprint_field(field,hero_pos,bullets,monsters,bonuses):
             stdscr.addstr(y,x,".")
 
     __print_elements(field,bullets,monsters,bonuses)
-    stdscr.addstr(hero_pos[1],hero_pos[0],"@")
+    stdscr.addstr(hero_pos[1],hero_pos[0],"@",curses.color_pair(3))
 
 def print_state(state):
     stdscr.addstr(20,20,"health:"+str(state.hero.health))
