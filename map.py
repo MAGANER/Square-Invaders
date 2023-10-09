@@ -70,6 +70,7 @@ def print_question(a,b,c):
     stdscr.addstr(23,18,"please, answer the question {} + {} = ?".format(a,b))
     curses.echo()
     curses.curs_set(1)
+    curses.flushinp()
     s = stdscr.getstr(24,15,4)
     curses.curs_set(0)
     return s.decode("utf-8") == str(c)
