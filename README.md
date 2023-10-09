@@ -16,6 +16,7 @@ to run terminal version type ```python SquareInvaders classic```
 <a href="https://ibb.co/rfbWwGs"><img src="https://i.ibb.co/7Ng91J4/invaders.jpg" alt="invaders" border="0"></a><br />
 
 ### Terminal version
+<h2>This version is only available on Linux!</h2><br>
 <a href="https://imgbb.com/"><img src="https://i.ibb.co/wN9s0LK/SQ1.png" alt="start of game" border="0"></a>
 
 # Keys
