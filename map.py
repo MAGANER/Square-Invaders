@@ -72,7 +72,7 @@ def print_question(a,b,c):
     curses.curs_set(1)
     s = stdscr.getstr(24,15,4)
     curses.curs_set(0)
-    return s == c
+    return s.decode("utf-8") == str(c)
 
 def update():
     stdscr.refresh()    

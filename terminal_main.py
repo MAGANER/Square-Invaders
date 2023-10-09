@@ -33,13 +33,13 @@ def main():
 
             sleep(0.1)        
         else:
-            #result = ask()
-            #if not print_question(*result):
-            #    if len(mm.monsters) > 10:
-            #        for n in range(10):
-            #            mm.shoot(bullets)
-            #else:
-            #    state.hero.score = state.hero.score + 50
+            result = ask()
+            if not print_question(*result):
+                if len(mm.monsters) > 10:
+                    for n in range(10):
+                        mm.shoot(bullets)
+            else:
+                state.hero.score = state.hero.score + 50
             state.question = False
 
         update()
