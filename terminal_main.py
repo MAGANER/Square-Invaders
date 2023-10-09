@@ -2,6 +2,7 @@ from time import sleep
 from os import system
 import os
 from Game import *
+import curses
 
 def main():
     #####################################
@@ -9,23 +10,17 @@ def main():
     ##################################
     state = GameState(19)
     
-    
-    print('\033[?25l', end="")#hide cursor
+    init()
     ################################
 
     while not state.death and not state.victory:
-        if os.name == "nt":
-            system("cls")
-        else:
-            system("clear")
+        refresh()
         update_clocks(state)
 
         
         chx, chy = state.hero.get_x(), state.hero.get_y()
-        print_field(state.field,(chx,chy),bullets,mm.monsters,bm.bonuses)
-        print(" "*15,"lives:{}".format(state.hero.health))
-        print(" "*15,"score:{}".format(state.hero.score))
-        print(" "*12,"time - {}".format(state.game_timer.get_time()))
+        cprint_field(state.field,(chx,chy),bullets,mm.monsters,bm.bonuses)
+        print_state(state)
 
         state.question = can_ask()
         if not state.question:
@@ -33,24 +28,30 @@ def main():
             process_bonuses(state,FIELD_HEIGHT)
             process_monsters(state,FIELD_HEIGHT)
             process_misc_state(state)
-            
+           
             if state.death:return False
             if state.victory: return True
 
             sleep(0.1)        
         else:
-            result = ask()
-            if not result:
-                if len(mm.monsters) > 10:
-                    for n in range(10):
-                        mm.shoot(bullets)
-            else:
-                state.hero.score = state.hero.score + 50
+            #curses.echo()
+            #result = ask()
+            #if not print_question(*result):
+            #    if len(mm.monsters) > 10:
+            #        for n in range(10):
+            #            mm.shoot(bullets)
+            #else:
+            #    state.hero.score = state.hero.score + 50
             state.question = False
+
+        update()
+
+    
 
 def finish():
     print("\033[?25h",end="")
     exit(0)
+    quit()
     
 def run_game():
     try:
@@ -70,3 +71,4 @@ def run_game():
     except KeyboardInterrupt:
         system("cls||clear")
         finish()
+        quit()

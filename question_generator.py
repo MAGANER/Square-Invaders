@@ -3,15 +3,8 @@ import random
 from inputimeout import inputimeout, TimeoutOccurred
 import sys
 
-def flush_input():
-    try:
-        #TODO:this solution doesn't work for windows properly
-        import msvcrt
-        while msvcrt.kbhit():
-            msvcrt.getch()
-    except ImportError:
-        import termios    #for linux/unix
-        termios.tcflush(sys.stdin, termios.TCIOFLUSH)
+if len(sys.argv) > 1 and sys.argv[1] == "classic":
+    import curses
 
 __time_to_ask = 0
 def tick_qtime():
@@ -24,7 +17,7 @@ def restart_asking_time():
 def can_ask():
     '''check is it right time to ask question as a+b=?'''
     global __time_to_ask
-    if __time_to_ask > 150:
+    if __time_to_ask > 40: #150:
         __time_to_ask = 0
         return True
     return False
@@ -45,12 +38,5 @@ def ask(graphical = False):
     #get question for graphical version
     if graphical:
         return get_question_data()
-    
-    try:
-        flush_input()
-        answer = inputimeout(prompt="please, answer the question: {} + {} = ?".format(a,b),timeout=10)
-    except TimeoutOccurred:
-        return  False
-    if str(s) == answer.replace(" ",""): return True
 
-    return False
+    return a,b,s
