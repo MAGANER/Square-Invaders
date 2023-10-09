@@ -50,12 +50,15 @@ def main():
 def finish():
     print("\033[?25h",end="")
     exit(0)
-    quit()
     
 def run_game():
     try:
         result = main()
-        system("cls||clear")
+        quit()
+        if os.name == "nt":
+            system("cls")
+        else:
+            system("clear")
         choice = ""
         while True:
             if result:
