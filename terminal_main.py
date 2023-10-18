@@ -1,6 +1,7 @@
 from time import sleep
 from os import system
 import os
+import importlib
 from Game import *
 import curses
 
@@ -66,7 +67,12 @@ def run_game():
             else:
                 choice = input("You died. Nation of terminal was conquered by hash-tags... Do you want to restart?(y/n)")
 
-            if choice not in ["y","n"]: continue
+            if choice not in ["y","n"]:
+                #reset state
+                module = os.path.basename(__file__)[:-3]
+                module = importlib.import_module(module)
+                importlib.reload(module)                 
+                continue
             elif choice == "y": main()
             else: finish()
             
